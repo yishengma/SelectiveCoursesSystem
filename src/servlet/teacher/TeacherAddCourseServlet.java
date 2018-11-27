@@ -2,6 +2,7 @@ package servlet.teacher;
 
 
 import Utils.JsonUtil;
+import constant.Constant;
 import db.DataBaseHelper;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//@GET
 @WebServlet(name = "TeacherAddCourseServlet",urlPatterns = "/teacher/course")
 public class TeacherAddCourseServlet extends HttpServlet {
     @Override
@@ -22,6 +24,6 @@ public class TeacherAddCourseServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        JsonUtil.response(resp,"添加成功！","添加成功！","添加失败！");
+        JsonUtil.response(resp,"添加成功！","添加成功！","添加失败！", Constant.TEACHER);
     }
 }

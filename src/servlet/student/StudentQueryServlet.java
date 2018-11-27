@@ -5,6 +5,7 @@ import Utils.CloseUtil;
 import bean.Course;
 import bean.SelectCourse;
 import bean.Teacher;
+import constant.Constant;
 import db.DataBaseHelper;
 
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import java.util.List;
 import static Utils.JsonUtil.response;
 
 
+//GET //http://localhost:8080/web/student/course?sno=4650
 @WebServlet(name = "StudentQueryServlet", urlPatterns = "/student/course")
 public class StudentQueryServlet extends HttpServlet {
 
@@ -77,7 +79,7 @@ public class StudentQueryServlet extends HttpServlet {
         }finally {
             CloseUtil.close(resultSet);
         }
-        response(resp, list, "成功！", "暂无选课！");
+        response(resp, list, "成功！", "暂无选课!", Constant.STUDENT);
 
     }
 }

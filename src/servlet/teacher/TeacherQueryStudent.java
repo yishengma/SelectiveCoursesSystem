@@ -3,6 +3,7 @@ package servlet.teacher;
 import Utils.CloseUtil;
 import Utils.JsonUtil;
 import bean.Student;
+import constant.Constant;
 import db.DataBaseHelper;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//@GET
 @WebServlet(name = "TeacherQueryStudent",urlPatterns = "/teacher/query")
 public class TeacherQueryStudent extends HttpServlet {
 
@@ -62,6 +64,6 @@ public class TeacherQueryStudent extends HttpServlet {
             CloseUtil.close(resultSet);
         }
 
-        JsonUtil.response(resp,list,"查询成功!","查询失败！");
+        JsonUtil.response(resp,list,"查询成功!","查询失败！", Constant.TEACHER);
     }
 }

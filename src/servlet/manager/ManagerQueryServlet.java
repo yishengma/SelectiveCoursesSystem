@@ -17,12 +17,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+//@GET http://localhost:8080/web/manager/query?type=teacher
 @WebServlet(name = "ManagerQueryServlet", urlPatterns = "/manager/query")
 public class ManagerQueryServlet extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String type = req.getParameter("type");
         switch (type) {
             case Constant.STUDENT:
@@ -46,7 +46,7 @@ public class ManagerQueryServlet extends HttpServlet {
                 } finally {
                     CloseUtil.close(resultSet);
                 }
-                JsonUtil.response(resp, list,"查询成功！","查询失败！");
+                JsonUtil.response(resp, list,"查询成功！","查询失败！",Constant.MANAGER);
                 break;
             case Constant.TEACHER:
 
@@ -69,7 +69,7 @@ public class ManagerQueryServlet extends HttpServlet {
                 } finally {
                     CloseUtil.close(resultSet1);
                 }
-                JsonUtil.response(resp, list1,"查询成功！","查询失败！");
+                JsonUtil.response(resp, list1,"查询成功！","查询失败！",Constant.MANAGER);
                 break;
             default:
                 break;

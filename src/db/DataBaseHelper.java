@@ -42,18 +42,22 @@ public class DataBaseHelper {
     }
 
     public ResultSet query(String sql) throws SQLException {
+        System.out.println("query"+sql);
         return mStatement.executeQuery(sql);
     }
 
     public boolean update(String sql) throws SQLException {
+        System.out.println("update"+sql);
         return mStatement.execute(sql);
     }
 
     public boolean insert(String sql) throws SQLException {
+        System.out.println("insert"+sql);
         return update(sql);
     }
 
     public boolean delete(String sql) throws SQLException {
+        System.out.println("delete"+sql);
         return update(sql);
     }
 

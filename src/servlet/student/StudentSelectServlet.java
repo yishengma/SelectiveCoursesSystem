@@ -1,6 +1,7 @@
 package servlet.student;
 
 import Utils.JsonUtil;
+import constant.Constant;
 import db.DataBaseHelper;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+//@GET http://localhost:8080/web//student/unselect?sno=4650&cno=2
 @WebServlet(name = "StudentSelectServlet",urlPatterns = "/student/select")
 public class StudentSelectServlet extends HttpServlet {
 
@@ -25,6 +27,6 @@ public class StudentSelectServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        JsonUtil.response(resp,"添加成功！","添加成功！","添加失败！");
+        JsonUtil.response(resp,"添加成功！","添加成功！","添加失败！", Constant.STUDENT);
     }
 }

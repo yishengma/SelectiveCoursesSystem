@@ -1,10 +1,11 @@
 package servlet;
 
 import Utils.JsonUtil;
+import bean.Manager;
 import bean.Result;
 import bean.Student;
 import bean.Teacher;
-import com.alibaba.fastjson.JSON;
+
 import constant.Constant;
 import db.DataBaseHelper;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,14 +32,11 @@ public class Login extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         switch (req.getParameter("type")) {
             case Constant.MANAGER:
-
                 try {
                     managerLogin(req, resp);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-
                 break;
             case Constant.STUDENT:
                 try {
@@ -62,7 +60,7 @@ public class Login extends HttpServlet {
 
     }
 
-
+//http://localhost:8080/web/login?type=manager&account=123456&password=123456
     private void managerLogin(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String account = req.getParameter("account");
         String password = req.getParameter("password");
@@ -75,24 +73,26 @@ public class Login extends HttpServlet {
         if (list.contains(password)) {
             result.setMsg("登录成功！");
             result.setResult(true);
-            result.setT(null);
+            result.setManager(new Manager());
+            result.setType(Constant.MANAGER);
         } else {
             result.setMsg("密码错误！");
             result.setResult(false);
-            result.setT(null);
+            result.setManager(null);
+            result.setType(Constant.MANAGER);
         }
         resultSet.close();
         response(resp, result);
 
     }
 
+    //http://localhost:8080/web/login?type=student&account=4650&password=%E9%A9%AC%E7%94%9F
     private void studentLogin(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String account = req.getParameter("account");
         String password = req.getParameter("password");
 
         String url = "SELECT * FROM student WHERE Sno = " + "'"+account +"'"
                 + " AND Sname = " + "'"+password +"'";
-        System.out.println(url);
         ResultSet resultSet = DataBaseHelper.getInstance().query(url);
         Student student = null;
         while (resultSet.next()) {
@@ -105,16 +105,16 @@ public class Login extends HttpServlet {
         }
 
         resultSet.close();
-        response(resp, student,"登录成功！","登录失败！");
+        response(resp, student,"登录成功！","登录失败！",Constant.STUDENT);
 
 
     }
 
-   // http://localhost:8080/web/login?type=teacher&account=1234&password=%E5%BC%A0%E9%93%AD
+//http://localhost:8080/web/login?type=teacher&account=1234&password=%E5%BC%A0%E9%93%AD
     private void teacherLogin(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String account = req.getParameter("account");
         String password = req.getParameter("password");
-        ResultSet resultSet = DataBaseHelper.getInstance().query("SELECT * FROM servlet.teacher WHERE Tno = " + "'"+account +"'"
+        ResultSet resultSet = DataBaseHelper.getInstance().query("SELECT * FROM teacher WHERE Tno = " + "'"+account +"'"
                 + " AND Tname = " + "'"+password +"'");
         Teacher teacher = null;
         while (resultSet.next()) {
@@ -123,10 +123,11 @@ public class Login extends HttpServlet {
             teacher.setNo(resultSet.getInt("Tno"));
             teacher.setSchool(resultSet.getString("Tschool"));
             teacher.setSex(resultSet.getString("Tsex"));
+            teacher.setTel(resultSet.getString("Ttel"));
         }
 
         resultSet.close();
-        response(resp, teacher,"登录成功！","登录失败！");
+        response(resp, teacher,"登录成功！","登录失败！",Constant.TEACHER);
 
     }
 
