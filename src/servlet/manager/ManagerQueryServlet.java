@@ -2,6 +2,7 @@ package servlet.manager;
 
 import Utils.CloseUtil;
 import Utils.JsonUtil;
+import bean.Course;
 import bean.Student;
 import bean.Teacher;
 import constant.Constant;
@@ -71,6 +72,24 @@ public class ManagerQueryServlet extends HttpServlet {
                 }
                 JsonUtil.response(resp, list1,"查询成功！","查询失败！",Constant.MANAGER);
                 break;
+            case Constant.COURSE:
+                ResultSet resultSet2 = null;
+                List<Course> list2 = new ArrayList<>();
+                try {
+                    resultSet2 = DataBaseHelper.getInstance().query("SELECT * FROM course");
+                    while (resultSet2.next()){
+                        Course course = new Course();
+                        course.setNo(resultSet2.getInt("Cno"));
+                        course.setName(resultSet2.getString("Cname"));
+                        course.setSchool(resultSet2.getString("Cschool"));
+                        list2.add(course);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }finally {
+                    CloseUtil.close(resultSet2);
+                }
+              JsonUtil.response(resp,list2,"查询成功！","查询失败",Constant.COURSE);
             default:
                 break;
         }

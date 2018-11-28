@@ -51,16 +51,16 @@ public class ManagerAddServlet extends HttpServlet {
             case Constant.STUDENT:
                 for (Object o : list.getList()) {
                     String s = o.toString();
-                    Student student = JSON.parseObject(s,Student.class);
+                    Student student = JSON.parseObject(s, Student.class);
                     try {
 
                         DataBaseHelper.getInstance().insert("INSERT INTO student " +
                                 "(Sno, Sname, Ssex, Sage, Sschool)" + " value (" +
                                 student.getNo() + "," +
-                                "'"+student.getName()+"'" + "," +
-                                "'"+student.getSex()+"'" + "," +
-                                student.getAge()  + "," +
-                                "'"+student.getSchool()+"'"  +
+                                "'" + student.getName() + "'" + "," +
+                                "'" + student.getSex() + "'" + "," +
+                                student.getAge() + "," +
+                                "'" + student.getSchool() + "'" +
                                 ")");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -69,15 +69,16 @@ public class ManagerAddServlet extends HttpServlet {
                 break;
             case Constant.TEACHER:
                 for (Object o : list.getList()) {
-                    Teacher teacher = (Teacher) o;
+                    String s = o.toString();
+                    Teacher teacher = JSON.parseObject(s, Teacher.class);
                     try {
                         DataBaseHelper.getInstance().insert("INSERT INTO teacher " +
                                 "(Tno,Tname, Tsex, Ttel, Tschool)" + " value (" +
                                 teacher.getNo() + "," +
-                                "'"+teacher.getName()+"'" + "," +
-                                "'"+teacher.getSex()+"'"  + "," +
-                                "'"+teacher.getTel()+"'" + "," +
-                                "'"+teacher.getSchool()+"'" +
+                                "'" + teacher.getName() + "'" + "," +
+                                "'" + teacher.getSex() + "'" + "," +
+                                "'" + teacher.getTel() + "'" + "," +
+                                "'" + teacher.getSchool() + "'" +
                                 ")");
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -88,7 +89,7 @@ public class ManagerAddServlet extends HttpServlet {
                 break;
         }
 
-        JsonUtil.response(resp, "添加成功！", "添加成功！", "添加失败！",Constant.MANAGER);
+        JsonUtil.response(resp, "添加成功！", "添加成功！", "添加失败！", Constant.MANAGER);
     }
 
 }
