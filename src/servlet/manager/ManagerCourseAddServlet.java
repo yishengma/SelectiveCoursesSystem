@@ -14,17 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ManagerCourseDeleteServlet", urlPatterns = "/manager/course/add")
+@WebServlet(name = "ManagerCourseAddServlet", urlPatterns = "/manager/course/add")
 public class ManagerCourseAddServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //        if (req.getParameter("type").equals("add")) {
-
         Course course = JSON.toJavaObject(JsonUtil.getParm(req), Course.class);
         try {
             DataBaseHelper.getInstance().insert("INSERT INTO Course " +
-                    "(Cno, Sname, Cschool)" + " value (" +
+                    "(Cno, Cname, Cschool)" + " value (" +
                     course.getNo() + "," +
                     "'" + course.getName() + "'" + "," +
                     "'" + course.getSchool() + "'" +
