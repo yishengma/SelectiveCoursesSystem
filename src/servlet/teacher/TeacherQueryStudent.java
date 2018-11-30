@@ -29,6 +29,7 @@ public class TeacherQueryStudent extends HttpServlet {
         List<Student> list = new ArrayList<>();
         try {
           resultSet =   DataBaseHelper.getInstance().query("SELECT  " +
+                    "COUNT(student.Sno) total, "+
                     "student.Sno,  " +
                     "student.Sname,  " +
                     "student.Ssex,  " +
